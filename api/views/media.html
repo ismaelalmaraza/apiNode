@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" />
+
+    <title>Evidencia - encuestas</title>
+    <!-- <link
+      rel="stylesheet"
+      type="text/css"
+      href="/static/css/jquery.fancybox.min.css"
+    /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0px;
+            background: rgba(0, 0, 0, 0.01);
+            font-family: Roboto;
+        }
+        
+        .card {
+            background: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        .container {
+            padding: 20px 20px;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .download {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        
+        nav {
+            width: 100%;
+            height: 60px;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .nav-content {
+            margin-left: 20px;
+            margin-right: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        h3 {}
+        
+        #logo {
+            width: 60px;
+            height: 30px;
+            align-self: center;
+        }
+    </style>
+    <!-- <link rel="stylesheet" href="/static/css/style.css" /> -->
+</head>
+
+<body>
+    <nav>
+        <div class="nav-content">
+            <img id="logo" src="/static/images/oo.png" alt="" />
+            <h3>Evidencia</h3>
+        </div>
+    </nav>
+
+    {{ error }}
+
+    <div class="download">
+        <div class="container card">
+            <a href="data:image/png;base64,{{ name }}" data-fancybox data-caption="Evidencia">
+                <img src="data:image/png;base64,{{ name }}" alt="" width="400px" height="auto" />
+            </a>
+        </div>
+        <p>Da click en la <b>imagen</b> para porder descargar</p>
+    </div>
+
+    <!-- <script src="/static/js/jquery.js"></script> -->
+    <!-- <script src="/static/js/jquery.fancybox.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        $("[data-fancybox]").fancybox({
+            buttons: ["zoom", "download"]
+        });
+    </script>
+</body>
+
+</html>

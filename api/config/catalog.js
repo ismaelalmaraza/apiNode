@@ -1,0 +1,21 @@
+module.exports = {
+  questions: [
+    { type: 'text', id: 'pregunta1' },
+    { type: 'checkbox', id: 'pregunta2' },
+    { type: 'radiogroup', id: 'pregunta3' },
+    { type: 'dropdown', id: 'pregunta4' },
+    { type: 'comment', id: 'pregunta5' },
+    { type: 'rating', id: 'pregunta6' },
+    { type: 'imagepicker', id: 'pregunta7' },
+    { type: 'boolean', id: 'pregunta8' },
+    { type: 'html', id: 'pregunta9' },
+    { type: 'expression', id: 'pregunta10' },
+    { type: 'file', id: 'pregunta11' },
+    { type: 'matrix', id: 'pregunta12' },
+    { type: 'matrixdropdown', id: 'pregunta13' },
+    { type: 'matrixdynamic', id: 'pregunta14' },
+    { type: 'multipletext', id: 'pregunta15' },
+    { type: 'panel', id: 'pregunta16' },
+    { type: 'paneldynamic', id: 'pregunta17' },
+  ],
+};

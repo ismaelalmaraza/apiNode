@@ -1,0 +1,6 @@
+/develop_general.log
+/general.log
+/develop_test_general.log
+/coverage
+/.nyc_output
+/.vscode

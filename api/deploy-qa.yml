@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: common-survey-qa
+  labels:
+    app: common-survey-qa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: common-survey-qa
+  template:
+    metadata:
+      labels:
+        app: common-survey-qa
+    spec:
+      containers:
+        - name: common-survey-qa
+          image: registry.grupo.corp/common-survey-api:dev
+          imagePullPolicy: "Always"
+          env:
+            - name: apiUrl
+              value: "https://api.com/qa/common/survey"
+            - name: DB_CONNSTR
+              value: "mongodb://survey-user:MUqJVQtxZagmQc@10.100.0.0:27017/survey"
+      nodeSelector:
+        infrastructure: cloud
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: common-survey-qa
+  namespace: default
+  labels:
+    app: common-survey-qa
+spec:
+  type: ClusterIP
+  selector:
+    app: common-survey-qa
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: http
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: api-ingress-survey-qa
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: api.com
+      http:
+        paths:
+          - path: /qa/common/survey/?(.*)
+            backend:
+              serviceName: common-survey-qa
+              servicePort: 80
+    - host: api.grupo.corp
+      http:
+        paths:
+          - path: /qa/common/survey/?(.*)
+            backend:
+              serviceName: common-survey-qa
+              servicePort: 80

@@ -1,0 +1,705 @@
+swagger: "2.0"
+info:
+  title: API Survey
+  description: API description in Markdown
+  version: 1.0.0
+host: localhost:3000
+# basePath: /api
+schemes:
+  - http
+  - https
+  
+parameters: 
+  survey:
+    in: query
+    name: survey
+    required: true
+    type: integer
+    description: survey.
+  
+  surveyName:
+    in: query
+    name: surveyName
+    required: true
+    type: string
+    description: Survey Name
+  
+  surveySearch:
+    in: path
+    name: surveyId
+    required: true
+    type: integer
+    description: survey id
+    
+  # ANSWER
+  answer:
+    in: path
+    name: answerId
+    required: true
+    type: integer
+    description: Answer id
+
+
+  question:
+    in: query
+    name: question
+    required: true
+    type: integer
+    description: question
+    
+  questionSearch:
+    in: path
+    name: questionId
+    required: true
+    type: integer
+    description: Question id
+    
+  questionName:
+    in: query
+    name: surveyName
+    required: true
+    type: string
+    description: Survey Name
+    
+paths:
+  /:
+    get:
+      summary: Returns a list of surveys.
+      tags: 
+        - Survey
+      description: Optional extended description in Markdown.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SurveysResponseSuccess'
+        '500':
+          description: Unexpected error.    
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+
+  /{surveyId}:
+    get:
+      summary: Returns a survey
+      tags:
+        - Survey
+      description: extended description
+      operationId: getSurvey
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: surveyId
+          required: true
+          type: integer
+          minimum: 0
+      responses:
+        '200':
+          description: OK
+          schema:
+             $ref: '#/definitions/SurveyResponseSuccess'
+        '400':
+          description: Bad request. surveyId must be an integer and larger than 1
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+        '500':
+          description: Unexpected error.  
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+                  
+  /store:
+    post:
+      summary: Save a survey
+      tags:
+        - Survey
+      description: extended description
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/survey'
+        - $ref: '#/parameters/surveyName'
+
+      responses:
+        '200':
+          description: OK
+          examples:
+            application/json: {
+              "response":{
+                "survey": "{\"pages\":[{\"name\":\"formulario\",\"elements\":[{\"type\":\"text\",\"name\":\"name\",\"title\":\"Nombre\"},{\"type\":\"text\",\"name\":\"lastName\",\"title\":\"Apellido\"},{\"type\":\"checkbox\",\"name\":\"chooseSex\",\"title\":\"sexo\",\"choices\":[{\"value\":\"item1\",\"text\":\"item3\"},\"item2\",\"item3\"]}]}]}",
+                "surveyName": "Encuesta entregas",
+                "createdAt": "2019-05-03T20:39:07.605Z",
+                "updatedAt": "2019-05-03T20:39:07.605Z",
+                "surveyId": 112
+                }
+            }
+          schema:
+            $ref: '#/definitions/SurveyResponseSuccess'
+        400:
+          description: the parametrs should not be empty
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "2O3n-ffC_"
+            } 
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+              
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+            
+            
+  /{surveyId}/:
+    put:
+      summary: Replace a survey
+      tags:
+        - Survey
+      description: extended description
+      operationId: updateSurvey
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/surveySearch'
+        - $ref: '#/parameters/survey'
+        - $ref: '#/parameters/surveyName'
+        
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              response:
+                type: object
+        '400':
+          description: "the parametrs should not be empty"
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "2O3n-ffC_"
+            } 
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+        
+        '500':
+          description: Unexpected error.    
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+            
+            
+  /{surveyId}//:
+    delete:
+      summary: Returns a survey
+      tags:
+        - Survey
+      description: extended description
+      operationId: deleteSurvey
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: surveyId
+          required: true
+          type: integer
+          minimum: 1
+      responses:
+        '200':
+          description: OK
+          examples:
+            aplication/json: { "response":{
+              "survey": "{\"pages\":[{\"name\":\"formulario\",\"elements\":[{\"type\":\"text\",\"name\":\"name\",\"title\":\"Nombre\"},{\"type\":\"text\",\"name\":\"lastName\",\"title\":\"Apellido\"},{\"type\":\"checkbox\",\"name\":\"chooseSex\",\"title\":\"sexo\",\"choices\":[{\"value\":\"item1\",\"text\":\"item3\"},\"item2\",\"item3\"]}]}]}",
+              "surveyName": "Encuesta entregas",
+              "createdAt": "2019-05-03T20:39:07.605Z",
+              "updatedAt": "2019-05-03T20:39:07.605Z",
+              "surveyId": 112
+              }
+                          }
+        
+          schema:
+           $ref: '#/definitions/SurveyResponseSuccess'
+           
+        '400':
+          description: "the parametrs should not be empty"
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "2O3n-ffC_"
+            } 
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+              
+        '500':
+          description: Unexpected error.    
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "gEA-5YfH1"
+            }
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+            
+            
+  ###############
+  ### ANSWER  ###
+  ###############
+  /answer:
+    post:
+      summary: save a survey answered
+      tags:
+        - Answer
+      description: save the survey answered in base64 format
+      consumes:
+         - application/json
+      produces:
+        - applications/json
+      parameters:
+        - in: body
+          name: answer
+          schema:
+            type: object
+            properties:
+              metadata:
+                type: object
+              response:
+                type: array
+                items:
+                  type: string
+              surveyId:
+                type: number
+      responses:
+        '200':
+          description: OK
+          examples: 
+            application/json: {
+              "response":[
+                {
+                "survey":[],
+                "surveyId": 7,
+                "userId": "TfsdfOfdsfsaKfsdfsadE123221N",
+                "appId": 15,
+                "latitud": "x",
+                "longitud": "y",
+                "answer": "W3sidHlwZSI6InRleHQiLCJpZCI6InByZWd1bnRhMSIsImFuc3dlciI6ImNoZXZlcmUifSx7InR5cGUiOiJjaGVja2JveCIsImlkIjoicHJlZ3VudGEyIiwiYW5zd2VyIjpbMSwyLDMsNF19LHsidHlwZSI6InJhZGlvZ3JvdXAiLCJpZCI6InByZWd1bnRhMyIsImFuc3dlciI6WzgsNSw0LDNdfSx7InR5cGUiOiJkcm9wZG93biIsImlkIjoicHJlZ3VudGE0IiwiYW5zd2VyIjoxfSx7InR5cGUiOiJjb21tZW50IiwiaWQiOiJwcmVndW50YTUiLCJhbnN3ZXIiOiJhYWFhYWFhYWFhYWFhYWEifSx7InR5cGUiOiJyYXRpbmciLCJpZCI6InByZWd1bnRhNiIsImFuc3dlciI6Nn0seyJ0eXBlIjoiaW1hZ2VwaWNrZXIiLCJpZCI6InByZWd1bnRhNyIsImFuc3dlciI6IiJ9LHsidHlwZSI6ImJvb2xlYW4iLCJpZCI6InByZWd1bnRhOCIsImFuc3dlciI6ZmFsc2V9LHsidHlwZSI6Imh0bWwiLCJpZCI6InByZWd1bnRhOSIsImFuc3dlciI6IiJ9LHsidHlwZSI6ImV4cHJlc3Npb24iLCJpZCI6InByZWd1bnRhMTAiLCJhbnN3ZXIiOiIifSx7InR5cGUiOiJmaWxlIiwiaWQiOiJwcmVndW50YTExIiwiYW5zd2VyIjoiIn0seyJ0eXBlIjoibWF0cml4IiwiaWQiOiJwcmVndW50YTEyIiwiYW5zd2VyIjoiIn0seyJ0eXBlIjoibWF0cml4ZHJvcGRvd24iLCJpZCI6InByZWd1bnRhMTMiLCJhbnN3ZXIiOltdfSx7InR5cGUiOiJtYXRyaXhkeW5hbWljIiwiaWQiOiJwcmVndW50YTE0IiwiYW5zd2VyIjpbXX0seyJ0eXBlIjoibXVsdGlwbGV0ZXh0IiwiaWQiOiJwcmVndW50YTE1IiwiYW5zd2VyIjoiIn0seyJ0eXBlIjoicGFuZWwiLCJpZCI6InByZWd1bnRhMTYiLCJhbnN3ZXIiOiIifSx7InR5cGUiOiJwYW5lbGR5bmFtaWMiLCJpZCI6InByZWd1bnRhMTciLCJhbnN3ZXIiOiIifV0=",
+                "sha256Answer": "51dd6ed494bbb8e2bf5f412c3986603ab121508450c65793e438b6ef49a4f69f",
+                "createdAt": "2019-05-27T20:43:17.567Z",
+                "updatedAt": "2019-05-27T20:43:17.567Z",
+                "surveyAnswId": 470
+                }
+              ]
+            }
+          schema: 
+            $ref: '#/definitions/AnswerResponseSuccess'
+        # '400'
+        '500':
+          description: 'Unexpected error'
+          schema: 
+            $ref: '#/definitions/SurveyResponseError'
+  
+  /answer/:
+    get:
+      summary: Return a surveys list answered
+      tags:
+        - Answer
+      description: Return a list of answered surveys and how many were found
+      operationId: listAnswers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+             $ref: '#/definitions/AnswersResponseSuccess'
+        '500':
+          description: Unexpected error.  
+          schema:
+            $ref: '#/definitions/SurveyResponseError' 
+            
+  
+  /answer/{answerId}:
+    get:
+      summary: get a answer
+      tags:
+        - Answer
+      description: get a surver answered by your id
+      operationId: getAnswer
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/answer'
+      responses:
+        '200':
+          description: OK
+          schema:
+             $ref: '#/definitions/QuestionResponseSuccess'
+        '400':
+          description: Bad request. questionId must be an integer and larger than 1
+        '500':
+          description: Unexpected error.  
+          schema:
+            $ref: '#/definitions/SurveyResponseError' 
+            
+            
+            
+  /answer/{answerId}/:
+    put:
+      summary: Update name answer
+      tags:
+        - Answer
+      description: Assign name to an answered survey
+      operationId: updateAnswer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/answer'
+        - in: body
+          name: answer
+          schema:
+            type: object
+            properties:
+              metadata:
+                type: object
+              response:
+                type: array
+                items:
+                  type: string
+              surveyId:
+                type: number
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              response:
+                type: object
+        '400':
+          description: the parametrs should not be empty
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "2O3n-ffC_"
+            } 
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+        '500':
+          description: Unexpected error.    
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+            
+  /answer/{answerId}//:
+    delete:
+      summary: Delete a answer
+      tags:
+        - Answer
+      description: Delete a answer by your id
+      operationId: deleteAnswer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+         - $ref: '#/parameters/answer'
+      responses:
+        '200':
+          description: OK
+        
+        '400':
+          description: the parametrs should not be empty
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "2O3n-ffC_"
+            } 
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+        '500':
+          description: Unexpected error.    
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+            
+  #----------------------------------------------------------------
+            
+
+  # --- API CUESTIONS --- #
+  /getAllQuestions:
+    get:
+      summary: Returns a list of questions.
+      tags: 
+        - Question
+      description: Get all the questions that have been added
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SurveysResponseSuccess'
+        '500':
+          description: Unexpected error.    
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+            
+
+  /getQuestion/{questionId}:
+    get:
+      summary: Returns a survey
+      tags:
+        - Question
+      description: extended description
+      operationId: getQuestion
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/questionSearch'
+      responses:
+        '200':
+          description: OK
+          schema:
+             $ref: '#/definitions/QuestionResponseSuccess'
+        '400':
+          description: Bad request. questionId must be an integer and larger than 1
+        '500':
+          description: Unexpected error.  
+          schema:
+            $ref: '#/definitions/SurveyResponseError' 
+  
+  /storeQuestion:
+    post:
+      summary: Save a survey
+      tags:
+        - Question
+      description: extended description
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/question'
+        - $ref: '#/parameters/questionName'
+      responses:
+        '200':
+          description: OK
+          examples:
+            application/json: {
+              "response":{
+                "question": "{\"pregunta\":{\"type\":\"input\"}}",
+                "questionName": "Pregunta Abierta",
+                "createdAt": "2019-05-06T20:49:20.872Z",
+                "updatedAt": "2019-05-06T20:49:20.872Z",
+                "questionId": 125
+                }
+              }
+          schema:
+            $ref: '#/definitions/QuestionResponseSuccess'
+        400:
+          description: the parametrs should not be empty
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "2O3n-ffC_"
+            } 
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+
+  /updateQuestion/{questionId}:
+    put:
+      summary: Replace a question
+      tags:
+        - Question
+      description: extended description
+      operationId: updateQuestion
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/questionSearch'
+        - $ref: '#/parameters/question'
+        - $ref: '#/parameters/questionName'
+      responses:
+        '200':
+          description: OK
+          examples:
+            application/json: {
+              "response":{
+                "question": "{\"pregunta\":{\"type\":\"input\"}}",
+                "questionName": "Pregunta Abierta",
+                "createdAt": "2019-05-06T20:49:20.872Z",
+                "updatedAt": "2019-05-06T20:49:20.872Z",
+                "questionId": 125
+                }
+              }
+          schema:
+            type: object
+            properties:
+              response:
+                type: object
+        '400':
+          description: the parametrs should not be empty
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "2O3n-ffC_"
+            } 
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+        '500':
+          description: Unexpected error.    
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+                
+  /deleteQuestion/{questionId}:
+    delete:
+      summary: Delete a question
+      tags:
+        - Question
+      description: extended description
+      operationId: deleteQuestion
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+         - $ref: '#/parameters/questionSearch'
+      responses:
+        '200':
+          description: OK
+          examples:
+            aplication/json:  {
+              "response":{
+                "question": "{\"pregunta\":{\"type\":\"input\"}}",
+                "questionName": "Pregunta Abierta",
+                "createdAt": "2019-05-06T20:49:20.872Z",
+                "updatedAt": "2019-05-06T20:49:20.872Z",
+                "questionId": 125
+                }
+              }
+          schema:
+           $ref: '#/definitions/SurveyResponseSuccess'
+        '400':
+          description: the parametrs should not be empty
+          examples:
+            aplication/json: {
+              "message": "the parametrs should not be empty",
+              "reqId": "2O3n-ffC_"
+            } 
+          schema:
+            $ref: '#/definitions/SurveyResponseFail'
+        '500':
+          description: Unexpected error.    
+          schema:
+            $ref: '#/definitions/SurveyResponseError'
+
+definitions:
+  SurveyResponseSuccess:
+    properties:
+      response:
+        type: object
+        properties:
+          survey:
+            type: string
+          surveyName:
+            type: string
+          createdAt: 
+            type: string
+          updatedAt:
+            type: string
+          surveyId:
+            type: string 
+            
+  SurveysResponseSuccess:
+    properties:
+      response:
+        type: object
+        example: []
+      count:
+        type: integer
+        example: 10
+        
+  SurveyResponseFail:
+    properties:
+      response:
+        type: string
+      reqId:
+        type: string
+        
+  SurveyResponseError:
+    properties:
+      response: 
+        type: string
+      reqId: 
+        type: string
+        
+  # Answer
+  AnswerResponseSuccess:
+    properties:
+      response:
+        type: object
+        properties:
+          survey:
+            type: string
+          surveyId:
+            type: number
+          userId: 
+            type: string
+          appId:
+            type: string
+          answer:
+            type: string
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+          surveyAnswId:
+            type: number
+            
+  AnswersResponseSuccess:
+    properties:
+      response:
+        type: object
+        example: []
+      count:
+        type: integer
+        example: 10
+            
+
+  # Questions
+  
+  QuestionResponseSuccess:
+    properties:
+      response:
+        type: object
+        properties:
+          question:
+            type: string
+          questionName:
+            type: string
+          createdAt: 
+            type: string
+          updatedAt:
+            type: string
+          questionId:
+            type: string

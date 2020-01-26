@@ -1,0 +1,17 @@
+{
+  "name": "encuestas",
+  "script": "app.js",
+  "instances": "0",
+  "env_develop": {
+    "NODE_ENV": "develop"
+  },
+  "env_test": {
+    "NODE_ENV": "test"
+  },
+  "env_docker": {
+    "NODE_ENV": "docker"
+  },
+  "env_production": {
+    "NODE_ENV": "production"
+  }
+}

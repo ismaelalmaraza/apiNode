@@ -1,0 +1,17 @@
+{
+    "global": {
+        "db": {
+            "user": "user-mongodb",
+            "password": "RbmpM3fqJlN6pDOCdfZvQrQzeT87XrqwwETksFJPzm3KPMnXAg5nkSi1R1HzBkj1cNtx6Gvwmstg==",
+            "ip": "100.0.0.0",
+            "port": "10255",
+            "database": "db-survey?ssl=true",
+            "options": {
+                "useNewUrlParser": true
+            }
+        },
+        "logs": {
+            "name": "general.log"
+        }
+    }
+}

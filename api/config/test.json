@@ -1,0 +1,29 @@
+{
+  "global": {
+    "db": {
+      "user": "",
+      "password": "",
+      "ip": "127.0.0.1",
+      "port": "27017",
+      "database": "surveyTDD__",
+      "options": {
+        "useNewUrlParser": true
+      }
+    },
+    "logs": {
+      "name": "develop_test_general.log"
+    },
+    "auth": {
+      "options": {
+        "uri": "http://localhost:3820/user/verify-jwt",
+        "timeout": 15000,
+        "headers": {},
+        "json": true
+      }
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxhdG9ycmVkZWxoYWNlckBnbWFpbC5jb20iLCJfaWQiOiI1Y2QwZWRlNDRlODNiYzJlNGM3Yzk3ZGEiLCJpYXQiOjE1NTg2NTczMDgsImV4cCI6MTU1ODY2NDUwOH0.V0V63beY-2HvmnpUrJn2bDPirhHy4WbJFu_aERP3WaQ",
+    "test": {
+      "baseUrlTest": "http://localhost:3000"
+    }
+  }
+}

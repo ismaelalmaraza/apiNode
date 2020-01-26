@@ -1,0 +1,17 @@
+{
+  "global": {
+    "db": {
+      "user": "",
+      "password": "",
+      "ip": "10.100.11.229",
+      "port": "27017",
+      "database": "survey",
+      "options": {
+        "useNewUrlParser": true
+      }
+    },
+    "logs": {
+      "name": "general.log"
+    }
+  }
+}

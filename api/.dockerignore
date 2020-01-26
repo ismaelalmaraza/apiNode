@@ -1,0 +1,12 @@
+# repository
+.git/
+.gitignore
+
+Dockerfile
+node_modules
+coverage/
+
+# logs
+develop_general.log
+develop_test_general.log
+general.log

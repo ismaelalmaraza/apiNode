@@ -1,0 +1,18 @@
+FROM registry.grupo.corp/pm2:latest
+RUN a=v
+# packages for s.o
+RUN apt-get update -y
+RUN apt-get install vim -y
+RUN apt-get install tmux -y
+
+# Bundle APP files
+COPY package.json /app
+# Install app dependencies
+ENV NPM_CONFIG_LOGLEVEL warn
+RUN cd app && npm install
+WORKDIR /app
+RUN a=b
+COPY . /app
+EXPOSE 3000 27017
+
+CMD [ "pm2-runtime", "start", "pm2.json", "--env" , "docker", "-i", "max", "--web"]

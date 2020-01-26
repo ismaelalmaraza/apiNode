@@ -1,0 +1,19 @@
+{
+  "global": {
+    "db": {
+      "user": "",
+      "password": "",
+      "ip": "MONGODB",
+      "port": "27017",
+      "database": "surveyDBTest",
+      "options": {
+        "useNewUrlParser": true,
+        "useFindAndModify": false,
+        "useCreateIndex": true
+      }
+    },
+    "logs": {
+      "name": "develop_general.log"
+    }
+  }
+}

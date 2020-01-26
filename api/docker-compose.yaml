@@ -1,0 +1,42 @@
+version: "3"
+
+volumes:
+  mongostorage:
+services:
+  # Mongo Database
+  mongodb:
+    # Give it a name
+    container_name: MONGODB
+    # https://hub.docker.com/r/alexpunct/mongo/
+    image: registry.grupo.corp/mongo:latest
+    # We use mongostorage data volume and we will use the /data/db path for the database inside the container
+    volumes:
+      - mongostorage:/data/db
+    # Expose a MongoDB port to connect to, defined by the MONGODB_EXPOSED_PORT environment variable
+    # and map this port to the 27017 internal port which is what MongoDB uses
+    ports:
+      - "27017:27017"
+
+  survey:
+    container_name: api
+    # image: survey:v0.1
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.develop
+    # links:
+    #   - MONGODB:MONGODB
+    # The port that our API will have exposed so we can connect to
+    ports:
+      - "3000:3000"
+
+  survey-test:
+    container_name: apptest
+    # image: survey:v0.1
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.test
+    # links:
+    #   - MONGODB:MONGODB
+    # The port that our API will have exposed so we can connect to
+    ports:
+      - "4000:3000"
