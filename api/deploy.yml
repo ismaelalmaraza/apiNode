@@ -22,7 +22,7 @@ spec:
             - name: apiUrl
               value: "https://api.com/common/survey"
             - name: DB_CONNSTR
-              value: "mongodb://mongodb:RbmpM3fqZvsFJ1cNtx6Gvwmstg==@mongodb.documents.com:10255/survey?ssl=true&replicaSet=globaldb"
+              value: "mongodb://mongodb:RbmpM3fqZmstg==@mongodb.documents.com:10255/survey?ssl=true&replicaSet=globaldb"
       nodeSelector:
         infrastructure: cloud
 
