@@ -19,7 +19,7 @@
     "config": "^3.1.0",
     "cors": "^2.8.5",
     "excel4node": "^1.7.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-validator": "^5.3.1",
     "method-override": "^3.0.0",
     "moment": "^2.24.0",
